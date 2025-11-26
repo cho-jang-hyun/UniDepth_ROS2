@@ -1,4 +1,4 @@
-# Unidepth V2 for ROS2
+# UniDepthV2 for ROS2
 
 ![](assets/demo/rqt_test.png)
 
@@ -34,7 +34,7 @@ ros2 run usb_cam usb_cam_node_exe
 
 ## Depthimage_to_laserscan
 
-![](assets/deom/depthimage_to_laserscan.png)
+![](assets/demo/depthimage_to_laserscan.png)
 
 To use laserscan, you need camera information topic that contains distortion_model(e.g. plumb_bob).  
 The usual webcam need additional camera_info topic publication.
@@ -48,14 +48,12 @@ ros2 run usb_cam usb_cam_node_exe \
   
 ros2 run depthimage_to_laserscan depthimage_to_laserscan_node \
 --ros-args --remap depth:=/depth/image_raw --ros-args --remap depth_camera_info:=/camera_info
-
-
 ```
 
 
-
 ---
-# Below is the original README of Unidepth V2
+---
+# Below is the original README of UniDepth V2
 
 [![arXiv](https://img.shields.io/badge/UniDepthV2%20arXiv-2502.20110-blue?logo=arxiv&color=%23B31B1B)](https://arxiv.org/abs/2502.20110)
 [![arXiv](https://img.shields.io/badge/UniDepthV1%20arXiv-2403.18913-blue?logo=arxiv-v1&color=%23B31B1B)](https://arxiv.org/abs/2403.18913)
