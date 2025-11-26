@@ -1,3 +1,62 @@
+# Unidepth V2 for ROS2
+
+![](assets/demo/rqt_test.png)
+
+## Installation
+
+To use ROS2, you need to run it inside a virtual environment (venv).  
+Using conda with ROS2 is not recommended as it often causes compatibility issues.
+
+Install the environment needed to run UniDepth_ROS2 with:
+```shell
+export VENV_DIR=unidepth_venv
+export NAME=Unidepth
+
+python -m venv $VENV_DIR/$NAME
+source $VENV_DIR/$NAME/bin/activate
+
+# Install UniDepth and dependencies, cuda >11.8 work fine, too.
+git clone https://github.com/cho-jang-hyun/UniDepth_ROS2.git
+cd Unidepth_ROS2
+pip install -e . --extra-index-url https://download.pytorch.org/whl/cu118
+
+# Install Pillow-SIMD (Optional)
+pip uninstall pillow
+CC="cc -mavx2" pip install -U --force-reinstall pillow-simd
+
+pip install 'numpy<2'
+
+python unidepth_ros_cam.py
+
+# example
+ros2 run usb_cam usb_cam_node_exe
+```
+
+## Depthimage_to_laserscan
+
+![](assets/deom/depthimage_to_laserscan.png)
+
+To use laserscan, you need camera information topic that contains distortion_model(e.g. plumb_bob).  
+The usual webcam need additional camera_info topic publication.
+
+```shell
+sudo apt install ros-<ros2_distro>-depthimage-to-laserscan
+
+# pub with camera_info
+ros2 run usb_cam usb_cam_node_exe \
+--ros-args -p camera_info_url:=file:///home/<absolute path to camera info>/camera_info/camera_calibration.yaml
+  
+ros2 run depthimage_to_laserscan depthimage_to_laserscan_node \
+--ros-args --remap depth:=/depth/image_raw --ros-args --remap depth_camera_info:=/camera_info
+
+
+```
+
+
+
+---
+# Below is the original README of Unidepth V2
+
 [![arXiv](https://img.shields.io/badge/UniDepthV2%20arXiv-2502.20110-blue?logo=arxiv&color=%23B31B1B)](https://arxiv.org/abs/2502.20110)
 [![arXiv](https://img.shields.io/badge/UniDepthV1%20arXiv-2403.18913-blue?logo=arxiv-v1&color=%23B31B1B)](https://arxiv.org/abs/2403.18913)
 [![ProjectPage](https://img.shields.io/badge/Project_Page-UniDepth-blue)](https://lpiccinelli-eth.github.io/pub/unidepth/)
